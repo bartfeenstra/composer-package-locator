@@ -9,6 +9,9 @@ use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 
+/**
+ * Provides a Composer plugin that stores the location of the vendor directory.
+ */
 class ComposerPlugin implements PluginInterface, EventSubscriberInterface
 {
 
