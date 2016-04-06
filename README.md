@@ -7,7 +7,7 @@ vendor directory and package installation paths.
  
 ## Usage
 Add a dependency on this package to your project by running
-`composer require bartfeenstra/composer-package-locator:0.2.*`.
+`composer require bartfeenstra/composer-package-locator:0.3.*`.
 
 To find all installed files, simply create an instance of 
 `\BartFeenstra\ComposerPackageLocator\InstalledFileSystemRepository` and use it like any other 

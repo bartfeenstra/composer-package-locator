@@ -3,11 +3,10 @@
   "type": "composer-plugin",
   "license": "MIT",
   "require": {
-    "composer-plugin-api": "~1.0",
+    "composer/composer": "~1.0",
     "php": "~5.6 || ~7.0"
   },
   "require-dev": {
-    "composer/composer": "~1.0",
     "phpunit/phpunit": "~5.2",
     "squizlabs/php_codesniffer": "~2.5",
     "webmozart/glob": "~4.0"
