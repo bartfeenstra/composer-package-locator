@@ -1,0 +1,43 @@
+[
+  {
+    "name": "bartfeenstra/composer-package-locator",
+    "version": "0.1.0",
+    "version_normalized": "0.1.0.0",
+    "source": {
+      "type": "git",
+      "url": "https://github.com/bartfeenstra/composer-package-locator.git",
+      "reference": "5981df3fc778f6465d7dc4d51bb86441ca0b4051"
+    },
+    "dist": {
+      "type": "zip",
+      "url": "https://api.github.com/repos/bartfeenstra/composer-package-locator/zipball/5981df3fc778f6465d7dc4d51bb86441ca0b4051",
+      "reference": "5981df3fc778f6465d7dc4d51bb86441ca0b4051",
+      "shasum": ""
+    },
+    "require": {
+      "composer-plugin-api": "~1.0",
+      "php": "~5.6 || ~7.0"
+    },
+    "require-dev": {
+      "composer/composer": "~1.0",
+      "phpunit/phpunit": "~5.2",
+      "squizlabs/php_codesniffer": "~2.5",
+      "webmozart/glob": "~4.0"
+    },
+    "time": "2016-04-06 09:19:23",
+    "type": "composer-plugin",
+    "extra": {
+      "class": "BartFeenstra\\ComposerPackageLocator\\ComposerPlugin"
+    },
+    "installation-source": "dist",
+    "autoload": {
+      "psr-4": {
+        "BartFeenstra\\ComposerPackageLocator\\": "src"
+      }
+    },
+    "notification-url": "https://packagist.org/downloads/",
+    "license": [
+      "MIT"
+    ]
+  }
+]

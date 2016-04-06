@@ -14,6 +14,8 @@ use Webmozart\Glob\Test\TestUtil;
 
 /**
  * @coversDefaultClass \BartFeenstra\ComposerPackageLocator\ComposerPlugin
+ *
+ * @runTestsInSeparateProcesses
  */
 class ComposerPluginTest extends PHPUnit_Framework_TestCase
 {

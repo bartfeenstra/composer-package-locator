@@ -6,4 +6,4 @@ This package allows other Composer packages to retrieve information about all in
  
 ## Usage
 Add a dependency on this package to your project by running
-`composer require bartfeenstra/composer-package-locator:0.1.*`.
+`composer require bartfeenstra/composer-package-locator:0.2.*`.
