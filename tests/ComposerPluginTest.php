@@ -70,7 +70,6 @@ class ComposerPluginTest extends PHPUnit_Framework_TestCase
         $rootDirectory = TestUtil::makeTempDir('bartfeenstra-composer-package-locator', __CLASS__);
         $vendorDirectoryName = 'the-vendor';
         $vendorDirectory = $rootDirectory . '/' . $vendorDirectoryName;
-        $autoloadFile = $vendorDirectory . '/autoload.php';
 
         $fileSystem = new Filesystem();
         $fileSystem->mirror(__DIR__ . '/../fixtures/dependentRoot', $rootDirectory);
@@ -80,6 +79,7 @@ class ComposerPluginTest extends PHPUnit_Framework_TestCase
         $config = new Config(false, $rootDirectory);
         $config->merge([
             'config' => [
+                'home' => $rootDirectory,
                 'vendor-dir' => $vendorDirectoryName,
             ],
         ]);
@@ -93,13 +93,29 @@ class ComposerPluginTest extends PHPUnit_Framework_TestCase
 
         $this->sut->storeVendorDir($event->reveal());
 
-        ob_start();
-        require_once $autoloadFile;
-        echo BARTFEENSTRA_COMPOSER_PACKAGE_LOCATOR_VENDOR_DIR;
-        $vendorDirectoryConstantValue = ob_get_contents();
-        ob_end_clean();
-        $this->assertSame($vendorDirectory, $vendorDirectoryConstantValue);
+        $this->assertConstant('BARTFEENSTRA_COMPOSER_PACKAGE_LOCATOR_VENDOR_DIR', $vendorDirectory, $vendorDirectory);
+        $this->assertConstant(
+            'BARTFEENSTRA_COMPOSER_PACKAGE_LOCATOR_HOME_FILE',
+            $rootDirectory . '/./composer.json',
+            $vendorDirectory
+        );
 
         $fileSystem->remove($rootDirectory);
+    }
+
+    /**
+     * @param $constantName
+     * @param $constantValue
+     * @param $vendorDirectory
+     */
+    protected function assertConstant($constantName, $constantValue, $vendorDirectory)
+    {
+        $autoloadFile = $vendorDirectory . '/autoload.php';
+        ob_start();
+        require_once $autoloadFile;
+        eval(sprintf('echo %s;', $constantName));
+        $vendorDirectoryConstantValue = ob_get_contents();
+        ob_end_clean();
+        $this->assertSame($constantValue, $vendorDirectoryConstantValue);
     }
 }

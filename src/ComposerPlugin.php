@@ -4,6 +4,7 @@ namespace BartFeenstra\ComposerPackageLocator;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
+use Composer\Factory;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
@@ -30,6 +31,20 @@ class ComposerPlugin implements PluginInterface, EventSubscriberInterface
 
     public function storeVendorDir(Event $event)
     {
+        $this->storeConstant(
+            $event,
+            'BARTFEENSTRA_COMPOSER_PACKAGE_LOCATOR_VENDOR_DIR',
+            $event->getComposer()->getConfig()->get('vendor-dir')
+        );
+        $this->storeConstant(
+            $event,
+            'BARTFEENSTRA_COMPOSER_PACKAGE_LOCATOR_HOME_FILE',
+            $event->getComposer()->getConfig()->get('home') . '/' . Factory::getComposerFile()
+        );
+    }
+
+    public function storeConstant(Event $event, $constantName, $constantValue)
+    {
         $vendorDirectory = $event->getComposer()->getConfig()->get('vendor-dir');
         $autoloadFile = $vendorDirectory . '/autoload.php';
 
@@ -40,11 +55,10 @@ class ComposerPlugin implements PluginInterface, EventSubscriberInterface
             ));
         }
 
-        $constant = 'BARTFEENSTRA_COMPOSER_PACKAGE_LOCATOR_VENDOR_DIR';
-        $event->getIO()->write(sprintf('<info>Generating the "%s" constant</info>', $constant));
+        $event->getIO()->write(sprintf('<info>Generating the "%s" constant</info>', $constantName));
         $contents = file_get_contents($autoloadFile);
-        $additionalContents = sprintf("if (!defined('%s')) {\n", $constant);
-        $additionalContents .= sprintf("    define('%s', '%s');\n", $constant, $vendorDirectory);
+        $additionalContents = sprintf("if (!defined('%s')) {\n", $constantName);
+        $additionalContents .= sprintf("    define('%s', '%s');\n", $constantName, $constantValue);
         $additionalContents .= "}\n\n";
         // Regex modifiers:
         // "m": \s matches newlines
